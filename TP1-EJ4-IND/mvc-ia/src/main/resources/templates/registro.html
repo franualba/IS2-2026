@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+    ============================================================================
+    VISTA (CAPA V de MVC) - registro.html
+    ============================================================================
+    Formulario de registro de un nuevo Usuario (Persona), con los datos
+    personales solicitados por el enunciado: Nombre, Apellido, Documento,
+    Fecha de Nacimiento y Correo Personal (que se usara como usuario del
+    sistema), mas la contrasena de acceso.
+    ============================================================================
+-->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(titulo='Registro de usuario')}"></head>
+<body>
+
+<div class="container">
+    <div class="card shadow-sm" style="max-width: 560px; margin: 40px auto;">
+        <div class="card-body p-4">
+            <h3 class="text-center mb-4"><i class="bi bi-person-plus"></i> Registro de usuario</h3>
+
+            <div class="alert alert-danger" th:if="${correoDuplicado}">
+                Ya existe una cuenta registrada con ese correo.
+            </div>
+            <div class="alert alert-danger" th:if="${documentoDuplicado}">
+                Ya existe una persona registrada con ese numero de documento.
+            </div>
+
+            <form th:action="@{/registro}" th:object="${registroForm}" method="post" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" required/>
+                        <div class="text-danger small" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Apellido</label>
+                        <input type="text" class="form-control" th:field="*{apellido}" required/>
+                        <div class="text-danger small" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Documento</label>
+                        <input type="text" class="form-control" th:field="*{documento}" required/>
+                        <div class="text-danger small" th:if="${#fields.hasErrors('documento')}" th:errors="*{documento}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Fecha de nacimiento</label>
+                        <input type="date" class="form-control" th:field="*{fechaDeNacimiento}" required/>
+                        <div class="text-danger small" th:if="${#fields.hasErrors('fechaDeNacimiento')}" th:errors="*{fechaDeNacimiento}"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Correo personal (sera tu usuario)</label>
+                    <input type="email" class="form-control" th:field="*{correo}" required/>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Contrasena</label>
+                    <input type="password" class="form-control" th:field="*{password}" required/>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Registrarme</button>
+            </form>
+
+            <hr/>
+            <p class="text-center mb-0">
+                ¿Ya tenes cuenta? <a th:href="@{/login}">Iniciar sesion</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+    ============================================================================
+    VISTA - inventario/list.html
+    ============================================================================
+    Historial de movimientos de Inventario (ENTRADA/SALIDA), con el producto
+    asociado, cantidad y fecha. Las SALIDAs se generan automaticamente al
+    registrar una Compra (DetalleCompra.disminuirInventario()); las ENTRADAs
+    se cargan manualmente desde este modulo (inventario/form.html).
+    ============================================================================
+-->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(titulo='Inventario')}"></head>
+<body>
+
+<nav th:replace="~{fragments/navbar :: navbar(esAdmin=false, nombre='')}"></nav>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3><i class="bi bi-clipboard-data"></i> Inventario</h3>
+        <a th:href="@{/inventario/nuevo}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Registrar movimiento
+        </a>
+    </div>
+
+    <div class="table-responsive bg-white rounded shadow-sm p-3">
+        <table class="table table-hover align-middle">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Producto</th>
+                <th>Tipo</th>
+                <th>Cantidad</th>
+                <th>Fecha</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="m : ${movimientos}">
+                <td th:text="${m.id}">1</td>
+                <td th:text="${m.producto.nombre}">Producto</td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${m.tipoMovimiento.name() == 'ENTRADA'} ? 'bg-success' : 'bg-danger'"
+                          th:text="${m.tipoMovimiento}">ENTRADA</span>
+                </td>
+                <td th:text="${m.cantidad}">0</td>
+                <td th:text="${#dates.format(m.fecha, 'dd/MM/yyyy HH:mm')}">01/01/2026</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(movimientos)}">
+                <td colspan="5" class="text-center text-muted">No hay movimientos registrados.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

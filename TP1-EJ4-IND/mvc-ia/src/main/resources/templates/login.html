@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--
+    ============================================================================
+    VISTA (CAPA V de MVC) - login.html
+    ============================================================================
+    Formulario de inicio de sesion. Envia correo + password por POST a
+    "/login" (AuthController.procesarLogin). Muestra distintos mensajes
+    segun el resultado:
+      - correoNoRegistrado: invita a registrarse (con el correo pre-cargado)
+      - usuarioBloqueado: informa que se supero el limite de 3 intentos
+      - credencialesInvalidas: clave incorrecta, con intentos restantes
+      - registroExitoso: viene de haberse registrado correctamente
+    ============================================================================
+-->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(titulo='Iniciar sesion')}"></head>
+<body>
+
+<div class="container">
+    <div class="card card-login shadow-sm">
+        <div class="card-body p-4">
+            <h3 class="text-center mb-4"><i class="bi bi-box-arrow-in-right"></i> Iniciar sesion</h3>
+
+            <!-- Mensajes de estado -->
+            <div class="alert alert-warning" th:if="${correoNoRegistrado}">
+                Ese correo no esta registrado en el sistema. Por favor,
+                <a th:href="@{/registro(correo=${correoSugerido})}">registrate aqui</a>.
+            </div>
+            <div class="alert alert-danger" th:if="${usuarioBloqueado}">
+                <i class="bi bi-lock-fill"></i> Tu usuario fue BLOQUEADO por superar los
+                3 intentos fallidos permitidos. Contacta a un administrador para desbloquearlo.
+            </div>
+            <div class="alert alert-danger" th:if="${credencialesInvalidas}">
+                Correo o contrasena incorrectos.
+                <span th:if="${intentosRestantes != null}">
+                    Te quedan <strong th:text="${intentosRestantes}">-</strong> intento(s) antes del bloqueo.
+                </span>
+            </div>
+            <div class="alert alert-success" th:if="${registroExitoso}">
+                <i class="bi bi-check-circle"></i> Registro exitoso. Ya podes iniciar sesion.
+            </div>
+            <div class="alert alert-info" th:if="${param.logout}">
+                Sesion cerrada correctamente.
+            </div>
+
+            <form th:action="@{/login}" th:object="${loginForm}" method="post" novalidate>
+                <div class="mb-3">
+                    <label class="form-label">Correo (usuario)</label>
+                    <input type="email" class="form-control" th:field="*{correo}"
+                           placeholder="nombre@correo.com" required/>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('correo')}"
+                         th:errors="*{correo}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Contrasena</label>
+                    <input type="password" class="form-control" th:field="*{password}" required/>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('password')}"
+                         th:errors="*{password}"></div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+            </form>
+
+            <hr/>
+            <p class="text-center mb-0">
+                ¿No tenes cuenta? <a th:href="@{/registro}">Registrate aqui</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

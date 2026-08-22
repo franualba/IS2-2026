@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(titulo='Nueva compra')}"></head>
+<body>
+
+<nav th:replace="~{fragments/navbar :: navbar(esAdmin=false, nombre='')}"></nav>
+
+<div class="container">
+    <div class="card shadow-sm" style="max-width: 560px; margin: 0 auto;">
+        <div class="card-body p-4">
+            <h4 class="mb-4"><i class="bi bi-cart-plus"></i> Registrar nueva compra</h4>
+
+            <!--
+                Formulario simplificado (un producto por compra) a modo de
+                ejemplo funcional del flujo completo:
+                Compra.registrarCompra() -> Compra.agregarDetalle() ->
+                DetalleCompra.disminuirInventario().
+                Puede extenderse facilmente a multiples items por compra
+                agregando filas dinamicas con JavaScript.
+            -->
+            <form th:action="@{/compras}" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Producto</label>
+                    <select class="form-select" name="productoId" required>
+                        <option value="" disabled selected>Seleccione un producto</option>
+                        <option th:each="p : ${productos}" th:value="${p.id}" th:text="${p.nombre}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" min="1" class="form-control" name="cantidad" required/>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Confirmar compra</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

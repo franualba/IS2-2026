@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    ============================================================================
+    POM.XML - Descriptor de proyecto Maven
+    ============================================================================
+    Proyecto: Sistema de Gestion de Usuarios, Compras e Inventario
+    Arquitectura: MVC (Modelo - Vista - Controlador)
+    Stack tecnologico:
+      - Java 17
+      - Spring Boot 3.2.x  (spring-boot-starter-web, thymeleaf, data-jpa, validation)
+      - Thymeleaf como motor de plantillas (Vista)
+      - Spring Data JPA (Hibernate) como ORM sobre MySQL
+      - Bootstrap 5 (via WebJars) para el diseno de las plantillas HTML/CSS
+    ============================================================================
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Spring Boot se usa como "parent" para heredar versiones de dependencias ya probadas entre si -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.sistema</groupId>
+    <artifactId>gestion-sistema</artifactId>
+    <version>1.0.0</version>
+    <name>gestion-sistema</name>
+    <description>
+        Sistema de gestion de Personas/Usuarios/Administradores, Compras, Productos
+        e Inventario, desarrollado a partir de diagrama UML, en Spring Boot + Thymeleaf + MySQL.
+    </description>
+    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- ===================== CAPA WEB / CONTROLADOR (MVC) ===================== -->
+        <!-- Provee Spring MVC, servidor embebido Tomcat, Jackson, etc. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- ===================== CAPA VISTA ===================== -->
+        <!-- Motor de plantillas Thymeleaf, integrado con Spring MVC -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- ===================== CAPA MODELO / PERSISTENCIA (ORM) ===================== -->
+        <!-- Spring Data JPA (usa Hibernate como implementacion de JPA por defecto) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Driver JDBC de MySQL, utilizado por el ORM para conectarse a la base de datos -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Validaciones Bean Validation (jakarta.validation) usadas en las entidades y formularios -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- ===================== SEGURIDAD DE CONTRASENAS ===================== -->
+        <!-- Se utiliza unicamente el codificador BCrypt de Spring Security (sin habilitar
+             el filtro de seguridad completo) para poder respetar el modelado UML original
+             (login manual mediante Usuario.iniciarSesion / Administrador.iniciarSesion)
+             sin perder buenas practicas de hashing de contrasenas. -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
+
+        <!-- ===================== FRONTEND: BOOTSTRAP VIA WEBJARS ===================== -->
+        <!-- Se importa Bootstrap 5 y JQuery como WebJars para no depender de un CDN externo -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>5.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-core</artifactId>
+        </dependency>
+
+        <!-- Lombok: reduce codigo repetitivo (getters/setters/constructores) en el Modelo -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- ===================== TESTING ===================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

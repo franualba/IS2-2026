@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+    ============================================================================
+    VISTA - usuarios/list.html
+    ============================================================================
+    Listado de Usuarios con su estado (ACTIVO/BLOQUEADO) e intentos
+    fallidos, con accion para desbloquear (Administrador.desbloquearUsuario())
+    o eliminar.
+    ============================================================================
+-->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(titulo='Gestion de usuarios')}"></head>
+<body>
+
+<nav th:replace="~{fragments/navbar :: navbar(esAdmin=true, nombre='Administrador')}"></nav>
+
+<div class="container">
+    <h3 class="mb-4"><i class="bi bi-people"></i> Gestion de Usuarios</h3>
+
+    <div class="table-responsive bg-white rounded shadow-sm p-3">
+        <table class="table table-hover align-middle">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre completo</th>
+                <th>Correo</th>
+                <th>Documento</th>
+                <th>Intentos fallidos</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="u : ${usuarios}">
+                <td th:text="${u.id}">1</td>
+                <td th:text="${u.nombreCompleto}">Nombre Apellido</td>
+                <td th:text="${u.correo}">correo@mail.com</td>
+                <td th:text="${u.documento}">12345678</td>
+                <td th:text="${u.intentos}">0</td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${u.estado.name() == 'ACTIVO'} ? 'badge-activo' : 'badge-bloqueado'"
+                          th:text="${u.estado}">ACTIVO</span>
+                </td>
+                <td>
+                    <form th:if="${u.estado.name() == 'BLOQUEADO'}"
+                          th:action="@{/admin/usuarios/{id}/desbloquear(id=${u.id})}"
+                          method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <i class="bi bi-unlock"></i> Desbloquear
+                        </button>
+                    </form>
+                    <form th:action="@{/admin/usuarios/{id}/eliminar(id=${u.id})}"
+                          method="post" style="display:inline"
+                          onsubmit="return confirm('¿Eliminar este usuario?');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(usuarios)}">
+                <td colspan="7" class="text-center text-muted">No hay usuarios registrados.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(titulo='Panel administrador')}"></head>
+<body>
+
+<nav th:replace="~{fragments/navbar :: navbar(esAdmin=true, nombre=${administrador.nombreCompleto})}"></nav>
+
+<div class="container">
+    <div class="p-4 bg-white rounded shadow-sm mb-4">
+        <h2><i class="bi bi-shield-lock"></i> Panel de Administrador</h2>
+        <p class="text-muted">Nivel de acceso: <span th:text="${administrador.nivelAcceso}">-</span></p>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-people"></i> Gestion de Usuarios</h5>
+                    <p class="card-text">Listar, desbloquear y eliminar usuarios del sistema.</p>
+                    <a th:href="@{/admin/usuarios}" class="btn btn-outline-primary">Administrar</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-box-seam"></i> Productos</h5>
+                    <p class="card-text">Alta, edicion y baja de productos.</p>
+                    <a th:href="@{/productos}" class="btn btn-outline-primary">Administrar</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-clipboard-data"></i> Inventario</h5>
+                    <p class="card-text">Registrar movimientos y ver stock.</p>
+                    <a th:href="@{/inventario}" class="btn btn-outline-primary">Administrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

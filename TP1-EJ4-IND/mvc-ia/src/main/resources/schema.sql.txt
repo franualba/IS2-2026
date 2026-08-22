@@ -1,0 +1,22 @@
+-- =============================================================================
+-- schema.sql (OPCIONAL)
+-- =============================================================================
+-- Este script NO es necesario ejecutarlo manualmente: Hibernate (JPA) crea y
+-- actualiza automaticamente las tablas al iniciar la aplicacion, gracias a
+-- la propiedad "spring.jpa.hibernate.ddl-auto=update" definida en
+-- application.properties, y a "createDatabaseIfNotExist=true" en la URL del
+-- datasource.
+--
+-- Se incluye este archivo solo como referencia / documentacion de la
+-- estructura de datos resultante, o para quienes prefieran crear la base
+-- de datos manualmente antes de levantar el proyecto.
+-- =============================================================================
+
+CREATE DATABASE IF NOT EXISTS gestion_sistema
+    CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE gestion_sistema;
+
+-- La creacion detallada de tablas (usuarios, administradores, productos,
+-- inventario, compras, detalle_compra) queda a cargo de Hibernate en base
+-- a las anotaciones @Entity definidas en el paquete com.sistema.gestion.model.

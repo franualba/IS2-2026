@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(titulo='Inicio')}"></head>
+<body>
+
+<nav th:replace="~{fragments/navbar :: navbar(esAdmin=false, nombre=${usuario.nombreCompleto})}"></nav>
+
+<div class="container">
+    <div class="p-4 bg-white rounded shadow-sm mb-4">
+        <h2>Bienvenido/a, <span th:text="${usuario.nombreCompleto}">Usuario</span> <i class="bi bi-emoji-smile"></i></h2>
+        <p class="text-muted">Correo: <span th:text="${usuario.correo}"></span></p>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-box-seam"></i> Productos</h5>
+                    <p class="card-text">Consulta el catalogo de productos disponibles.</p>
+                    <a th:href="@{/productos}" class="btn btn-outline-primary">Ver productos</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-clipboard-data"></i> Inventario</h5>
+                    <p class="card-text">Consulta el stock actual e historial de movimientos.</p>
+                    <a th:href="@{/inventario}" class="btn btn-outline-primary">Ver inventario</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-cart-check"></i> Mis compras</h5>
+                    <p class="card-text">Registra una nueva compra o revisa tu historial.</p>
+                    <a th:href="@{/compras}" class="btn btn-outline-primary">Ir a mis compras</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

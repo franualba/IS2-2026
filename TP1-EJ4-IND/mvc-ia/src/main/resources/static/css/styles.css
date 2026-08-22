@@ -1,0 +1,29 @@
+/* ============================================================================
+   styles.css
+   ============================================================================
+   Estilos propios del sistema, complementarios a Bootstrap 5.
+   ============================================================================ */
+
+body {
+    background-color: #f4f6f9;
+}
+
+.card-login {
+    max-width: 420px;
+    margin: 60px auto;
+}
+
+.badge-activo {
+    background-color: #198754;
+}
+
+.badge-bloqueado {
+    background-color: #dc3545;
+}
+
+.footer-sistema {
+    text-align: center;
+    color: #6c757d;
+    padding: 20px 0;
+    font-size: 0.85rem;
+}

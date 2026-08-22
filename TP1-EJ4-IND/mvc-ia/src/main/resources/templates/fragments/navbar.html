@@ -1,0 +1,50 @@
+<!--
+    ============================================================================
+    FRAGMENTO THYMELEAF - navbar.html
+    ============================================================================
+    Barra de navegacion superior comun a todas las pantallas privadas del
+    sistema (una vez logueado, ya sea como Usuario o como Administrador).
+
+    Parametros:
+      - esAdmin: boolean -> si es true, muestra el enlace "Gestion de Usuarios"
+      - nombre: String   -> nombre completo de la persona logueada
+    ============================================================================
+-->
+<nav th:fragment="navbar(esAdmin, nombre)" class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" th:href="${esAdmin} ? @{/admin/home} : @{/home}">
+            <i class="bi bi-boxes"></i> Sistema de Gestion
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="navbar-nav" th:unless="${esAdmin}">
+                    <a class="nav-link" th:href="@{/home}">Inicio</a>
+                </li>
+                <li class="nav-item" th:if="${esAdmin}">
+                    <a class="nav-link" th:href="@{/admin/home}">Inicio</a>
+                </li>
+                <li class="nav-item" th:if="${esAdmin}">
+                    <a class="nav-link" th:href="@{/admin/usuarios}">Gestion de Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/productos}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/inventario}">Inventario</a>
+                </li>
+                <li class="nav-item" th:unless="${esAdmin}">
+                    <a class="nav-link" th:href="@{/compras}">Mis Compras</a>
+                </li>
+            </ul>
+            <span class="navbar-text text-light me-3">
+                <i class="bi bi-person-circle"></i> <span th:text="${nombre}">Nombre</span>
+            </span>
+            <a class="btn btn-outline-light btn-sm" th:href="@{/logout}">
+                <i class="bi bi-box-arrow-right"></i> Cerrar sesion
+            </a>
+        </div>
+    </div>
+</nav>

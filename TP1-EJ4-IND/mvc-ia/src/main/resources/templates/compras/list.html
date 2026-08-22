@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+    ============================================================================
+    VISTA - compras/list.html
+    ============================================================================
+    Historial de compras del Usuario logueado, con posibilidad de anular
+    una compra (Compra.anularCompra()), lo que repone el stock en Inventario.
+    ============================================================================
+-->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(titulo='Mis compras')}"></head>
+<body>
+
+<nav th:replace="~{fragments/navbar :: navbar(esAdmin=false, nombre='')}"></nav>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3><i class="bi bi-cart-check"></i> Mis compras</h3>
+        <a th:href="@{/compras/nueva}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nueva compra
+        </a>
+    </div>
+
+    <div class="table-responsive bg-white rounded shadow-sm p-3">
+        <table class="table table-hover align-middle">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Detalle</th>
+                <th>Precio total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c : ${compras}">
+                <td th:text="${c.id}">1</td>
+                <td th:text="${#dates.format(c.fechaCompra, 'dd/MM/yyyy HH:mm')}">01/01/2026</td>
+                <td>
+                    <ul class="mb-0 ps-3">
+                        <li th:each="d : ${c.detalles}">
+                            <span th:text="${d.producto.nombre}">Producto</span>
+                            x <span th:text="${d.cantidad}">1</span>
+                        </li>
+                    </ul>
+                </td>
+                <td th:text="'$' + ${c.precioTotal}">$0.0</td>
+                <td>
+                    <span class="badge" th:classappend="${c.anulada} ? 'bg-danger' : 'bg-success'"
+                          th:text="${c.anulada} ? 'ANULADA' : 'ACTIVA'">ACTIVA</span>
+                </td>
+                <td>
+                    <form th:if="${!c.anulada}" th:action="@{/compras/{id}/anular(id=${c.id})}" method="post"
+                          onsubmit="return confirm('¿Anular esta compra? Se repondra el stock.');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-x-circle"></i> Anular
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(compras)}">
+                <td colspan="6" class="text-center text-muted">Todavia no registraste compras.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
