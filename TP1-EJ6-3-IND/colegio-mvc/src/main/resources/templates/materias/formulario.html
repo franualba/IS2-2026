@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/plantilla :: head('Materia')}"></head>
+<body class="bg-light">
+<div th:replace="~{fragments/plantilla :: navbar}"></div>
+<div class="container" style="max-width: 30rem;">
+    <div class="card shadow p-4">
+        <h4 class="mb-3">Datos de la Materia</h4>
+        <form th:action="@{/materias/guardar}" th:object="${dto}" method="post">
+            <input type="hidden" th:field="*{idMateria}">
+            <div class="mb-3"><label class="form-label">Nombre</label>
+                <input class="form-control" th:field="*{nombre}">
+                <div class="text-danger small" th:errors="*{nombre}"></div></div>
+            <div class="mb-3"><label class="form-label">Colegio</label>
+                <select class="form-select" th:field="*{colegioId}">
+                    <option value="">--</option>
+                    <option th:each="c : ${colegios}" th:value="${c.idColegio}" th:text="${c.nombre}"></option>
+                </select></div>
+            <button class="btn btn-success w-100">Guardar</button>
+            <a class="btn btn-secondary w-100 mt-2" th:href="@{/materias}">Cancelar</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,8 @@
 package com.colegio.gestion.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -97,9 +99,9 @@ public class Nota implements Serializable {
 
     /**
      * ATRIBUTO: valor
-     * TIPO: float
-     * DESCRIPCIÓN: Valor numérico de la calificación.
-     * Escala típica: 0.0 a 10.0 (puede incluir decimales).
+     * TIPO: BigDecimal
+     * DESCRIPCIÓN: Valor numérico de la calificación con precisión decimal.
+     * Escala típica: 0.00 a 10.00.
      * 
      * ANOTACIONES:
      * - @Column(nullable = false, precision = 4, scale = 2): 
@@ -109,7 +111,7 @@ public class Nota implements Serializable {
      */
     @Column(nullable = false, precision = 4, scale = 2, 
             columnDefinition = "NUMERIC(4,2) DEFAULT 0.00")
-    private float valor;
+    private BigDecimal valor;
 
     /**
      * ATRIBUTO: descripcion
@@ -164,7 +166,7 @@ public class Nota implements Serializable {
      * @return boolean true si la nota es >= 6, false en caso contrario
      */
     public boolean esAprobatoria() {
-        return this.valor >= 6.0f;
+        return this.valor != null && this.valor.compareTo(new BigDecimal("6.0")) >= 0;
     }
 
     /**
@@ -174,7 +176,7 @@ public class Nota implements Serializable {
      * @return boolean true si la nota es < 6, false en caso contrario
      */
     public boolean esInsuficiente() {
-        return this.valor < 6.0f;
+        return this.valor != null && this.valor.compareTo(new BigDecimal("6.0")) < 0;
     }
 
     /**
@@ -195,7 +197,10 @@ public class Nota implements Serializable {
      * @return String con formato "X.XX"
      */
     public String getValorConDecimal() {
-        return String.format("%.2f", this.valor);
+        if (this.valor == null) {
+            return "0.00";
+        }
+        return this.valor.setScale(2, RoundingMode.HALF_UP).toPlainString();
     }
 
     /**

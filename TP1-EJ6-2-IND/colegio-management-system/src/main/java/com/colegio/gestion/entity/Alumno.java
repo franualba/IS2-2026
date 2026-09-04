@@ -281,10 +281,19 @@ public class Alumno extends Persona {
         if (this.notas == null || this.notas.isEmpty()) {
             return 0.0f;
         }
-        float suma = 0.0f;
+
+        java.math.BigDecimal suma = java.math.BigDecimal.ZERO;
         for (Nota nota : this.notas) {
-            suma += nota.getValor();
+            if (nota != null && nota.getValor() != null) {
+                suma = suma.add(nota.getValor());
+            }
         }
-        return suma / this.notas.size();
+
+        if (suma.compareTo(java.math.BigDecimal.ZERO) == 0) {
+            return 0.0f;
+        }
+
+        return suma.divide(java.math.BigDecimal.valueOf(this.notas.size()), 2, java.math.RoundingMode.HALF_UP)
+                .floatValue();
     }
 }

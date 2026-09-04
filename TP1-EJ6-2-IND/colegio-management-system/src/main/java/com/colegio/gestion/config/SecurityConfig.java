@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -157,7 +158,7 @@ public class SecurityConfig {
             // Configurar autorización de URLs
             .authorizeHttpRequests(authz -> authz
                 // URLs públicas (no requieren autenticación)
-                .requestMatchers("/registro", "/verificar/**", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/login", "/error", "/registro", "/verificar/**", "/css/**", "/js/**", "/images/**").permitAll()
                 // Todas las demás URLs requieren autenticación
                 .anyRequest().authenticated()
             )
@@ -193,7 +194,7 @@ public class SecurityConfig {
             )
             
             // Habilitar protección CSRF (Cross-Site Request Forgery)
-            .csrf(csrf -> csrf.enable())
+            .csrf(Customizer.withDefaults())
             
             // Configurar headers de seguridad
             .headers(headers -> headers

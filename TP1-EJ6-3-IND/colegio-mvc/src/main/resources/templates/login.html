@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/plantilla :: head('Iniciar Sesión')}"></head>
+<body class="bg-light">
+<!-- Plantilla de login estilo "Sign-in" de Bootstrap adaptada -->
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow p-4" style="width: 24rem;">
+        <h3 class="text-center mb-3">🏫 Iniciar Sesión</h3>
+
+        <!-- Mensajes según parámetros enviados por Spring Security / controlador -->
+        <div class="alert alert-danger"  th:if="${param.error}">Usuario o contraseña incorrectos.</div>
+        <div class="alert alert-info"    th:if="${param.logout}">Sesión cerrada correctamente.</div>
+        <div class="alert alert-success" th:if="${param.registrado}">¡Registro exitoso! Revisa tu correo personal.</div>
+
+        <!-- th:action agrega automáticamente el token CSRF oculto -->
+        <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Correo electrónico (usuario)</label>
+                <input type="email" name="username" class="form-control" required autofocus>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button class="btn btn-primary w-100" type="submit">Ingresar</button>
+        </form>
+        <a class="d-block text-center mt-3" th:href="@{/registro}">Registrarse como docente</a>
+    </div>
+</div>
+</body>
+</html>

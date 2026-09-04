@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/plantilla :: head('Inicio')}"></head>
+<body class="bg-light">
+<div th:replace="~{fragments/plantilla :: navbar}"></div>
+<div class="container">
+    <h2 class="mb-4">Panel Principal</h2>
+    <div class="row text-center g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm"><div class="card-body">
+                <h5 class="card-title">Profesores</h5>
+                <h1 th:text="${totalProfesores}">0</h1>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm"><div class="card-body">
+                <h5 class="card-title">Alumnos</h5>
+                <h1 th:text="${totalAlumnos}">0</h1>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm"><div class="card-body">
+                <h5 class="card-title">Materias</h5>
+                <h1 th:text="${totalMaterias}">0</h1>
+            </div></div>
+        </div>
+    </div>
+</div>
+<script th:replace="~{fragments/plantilla :: scripts}"></script>
+</body>
+</html>

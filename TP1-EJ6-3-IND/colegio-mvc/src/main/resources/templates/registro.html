@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/plantilla :: head('Registro Docente')}"></head>
+<body class="bg-light">
+<div class="container d-flex justify-content-center" style="min-height: 100vh; align-items:center;">
+    <div class="card shadow p-4" style="width: 32rem;">
+        <h3 class="text-center mb-3">Registro de Docente</h3>
+        <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+        <!-- th:object vincula el DTO; th:errors muestra errores de @Valid campo a campo -->
+        <form th:action="@{/registro}" th:object="${dto}" method="post">
+            <div class="row">
+                <div class="col mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input class="form-control" th:field="*{nombre}">
+                    <div class="text-danger small" th:errors="*{nombre}"></div>
+                </div>
+                <div class="col mb-3">
+                    <label class="form-label">Apellido</label>
+                    <input class="form-control" th:field="*{apellido}">
+                    <div class="text-danger small" th:errors="*{apellido}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-3">
+                    <label class="form-label">Sexo</label>
+                    <select class="form-select" th:field="*{sexo}">
+                        <option value="">-- Seleccione --</option>
+                        <option th:each="s : ${T(com.colegio.modelo.Sexo).values()}"
+                                th:value="${s}" th:text="${s}"></option>
+                    </select>
+                    <div class="text-danger small" th:errors="*{sexo}"></div>
+                </div>
+                <div class="col mb-3">
+                    <label class="form-label">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" th:field="*{fechaNacimiento}">
+                    <div class="text-danger small" th:errors="*{fechaNacimiento}"></div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Correo personal (será su usuario)</label>
+                <input type="email" class="form-control" th:field="*{correo}">
+                <div class="text-danger small" th:errors="*{correo}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Especialidad</label>
+                <input class="form-control" th:field="*{especialidad}">
+            </div>
+            <div class="row">
+                <div class="col mb-3">
+                    <label class="form-label">Contraseña (mín. 8)</label>
+                    <input type="password" class="form-control" th:field="*{password}">
+                    <div class="text-danger small" th:errors="*{password}"></div>
+                </div>
+                <div class="col mb-3">
+                    <label class="form-label">Confirmar contraseña</label>
+                    <input type="password" class="form-control" th:field="*{confirmarPassword}">
+                </div>
+            </div>
+            <button class="btn btn-success w-100" type="submit">Registrarme</button>
+            <a class="d-block text-center mt-3" th:href="@{/login}">Volver al login</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

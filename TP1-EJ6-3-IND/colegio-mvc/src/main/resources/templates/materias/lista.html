@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/plantilla :: head('Materias')}"></head>
+<body class="bg-light">
+<div th:replace="~{fragments/plantilla :: navbar}"></div>
+<div class="container">
+    <div class="d-flex justify-content-between mb-3">
+        <h2>Materias</h2>
+        <a class="btn btn-primary" th:href="@{/materias/nuevo}">+ Nueva Materia</a>
+    </div>
+    <table class="table table-striped bg-white shadow-sm">
+        <thead class="table-dark"><tr><th>ID</th><th>Nombre</th><th>Colegio</th><th>Acciones</th></tr></thead>
+        <tbody>
+        <tr th:each="m : ${materias}">
+            <td th:text="${m.idMateria}"></td>
+            <td th:text="${m.nombre}"></td>
+            <td th:text="${m.colegioNombre}"></td>
+            <td>
+                <a class="btn btn-sm btn-warning" th:href="@{/materias/editar/{id}(id=${m.idMateria})}">Editar</a>
+                <a class="btn btn-sm btn-danger"  th:href="@{/materias/eliminar/{id}(id=${m.idMateria})}">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

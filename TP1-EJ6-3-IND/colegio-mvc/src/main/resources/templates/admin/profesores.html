@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/plantilla :: head('Profesores')}"></head>
+<body class="bg-light">
+<div th:replace="~{fragments/plantilla :: navbar}"></div>
+<div class="container">
+    <h2 class="mb-3">Profesores (Administración)</h2>
+    <table class="table table-striped bg-white shadow-sm">
+        <thead class="table-dark">
+        <tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Sexo</th><th>Especialidad</th><th>Usuario (correo)</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${profesores}">
+            <td th:text="${p.idProfesor}"></td>
+            <td th:text="${p.nombre}"></td>
+            <td th:text="${p.apellido}"></td>
+            <td th:text="${p.sexo}"></td>
+            <td th:text="${p.especialidad}"></td>
+            <td th:text="${p.usuario}"></td>
+            <td><a class="btn btn-sm btn-danger"
+                   th:href="@{/admin/profesores/eliminar/{id}(id=${p.idProfesor})}"
+                   onclick="return confirm('¿Dar de baja al docente?')">Baja lógica</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

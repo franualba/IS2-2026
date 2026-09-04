@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/plantilla :: head('Alumnos')}"></head>
+<body class="bg-light">
+<div th:replace="~{fragments/plantilla :: navbar}"></div>
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Alumnos</h2>
+        <a class="btn btn-primary" th:href="@{/alumnos/nuevo}">+ Nuevo Alumno</a>
+    </div>
+    <table class="table table-striped table-hover bg-white shadow-sm">
+        <thead class="table-dark">
+        <tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Sexo</th><th>Nacimiento</th><th>Aula</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="a : ${alumnos}">
+            <td th:text="${a.idAlumno}"></td>
+            <td th:text="${a.nombre}"></td>
+            <td th:text="${a.apellido}"></td>
+            <td th:text="${a.sexo}"></td>
+            <td th:text="${a.fechaNacimiento}"></td>
+            <td th:text="${a.aulaDescripcion}"></td>
+            <td>
+                <a class="btn btn-sm btn-warning" th:href="@{/alumnos/editar/{id}(id=${a.idAlumno})}">Editar</a>
+                <a class="btn btn-sm btn-danger"  th:href="@{/alumnos/eliminar/{id}(id=${a.idAlumno})}"
+                   onclick="return confirm('¿Eliminar lógicamente?')">Eliminar</a>
+                <a class="btn btn-sm btn-info"    th:href="@{/notas/alumno/{id}(id=${a.idAlumno})}">Notas</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

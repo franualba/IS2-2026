@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/plantilla :: head('Alumno')}"></head>
+<body class="bg-light">
+<div th:replace="~{fragments/plantilla :: navbar}"></div>
+<div class="container" style="max-width: 34rem;">
+    <div class="card shadow p-4">
+        <h4 class="mb-3">Datos del Alumno</h4>
+        <form th:action="@{/alumnos/guardar}" th:object="${dto}" method="post">
+            <input type="hidden" th:field="*{idAlumno}">
+            <div class="mb-3"><label class="form-label">Nombre</label>
+                <input class="form-control" th:field="*{nombre}">
+                <div class="text-danger small" th:errors="*{nombre}"></div></div>
+            <div class="mb-3"><label class="form-label">Apellido</label>
+                <input class="form-control" th:field="*{apellido}">
+                <div class="text-danger small" th:errors="*{apellido}"></div></div>
+            <div class="row">
+                <div class="col mb-3"><label class="form-label">Sexo</label>
+                    <select class="form-select" th:field="*{sexo}">
+                        <option value="">--</option>
+                        <option th:each="s : ${T(com.colegio.modelo.Sexo).values()}"
+                                th:value="${s}" th:text="${s}"></option>
+                    </select></div>
+                <div class="col mb-3"><label class="form-label">Nacimiento</label>
+                    <input type="date" class="form-control" th:field="*{fechaNacimiento}"></div>
+            </div>
+            <div class="mb-3"><label class="form-label">Aula</label>
+                <select class="form-select" th:field="*{aulaId}">
+                    <option value="">-- Sin aula --</option>
+                    <option th:each="aula : ${aulas}" th:value="${aula.idAula}"
+                            th:text="${aula.grado.nivel + ' ' + aula.division}"></option>
+                </select></div>
+            <button class="btn btn-success w-100">Guardar</button>
+            <a class="btn btn-secondary w-100 mt-2" th:href="@{/alumnos}">Cancelar</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

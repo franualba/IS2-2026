@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/plantilla :: head('Notas')}"></head>
+<body class="bg-light">
+<div th:replace="~{fragments/plantilla :: navbar}"></div>
+<div class="container">
+    <div class="d-flex justify-content-between mb-3">
+        <h2>Notas</h2>
+        <a class="btn btn-primary" th:href="@{/notas/nueva}">+ Nueva Nota</a>
+    </div>
+    <table class="table table-striped bg-white shadow-sm">
+        <thead class="table-dark"><tr><th>ID</th><th>Alumno</th><th>Materia</th><th>Fecha</th><th>Valor</th><th></th></tr></thead>
+        <tbody>
+        <tr th:each="n : ${notas}">
+            <td th:text="${n.idNota}"></td>
+            <td th:text="${n.alumnoNombre}"></td>
+            <td th:text="${n.materiaNombre}"></td>
+            <td th:text="${n.fecha}"></td>
+            <td><span class="badge text-bg-primary" th:text="${n.valor}"></span></td>
+            <td><a class="btn btn-sm btn-danger" th:href="@{/notas/eliminar/{id}(id=${n.idNota})}">Eliminar</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
