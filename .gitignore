@@ -1,0 +1,39 @@
+```
+# Java/Maven specific
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build and dependency directories
+build/
+dist/
+node_modules/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+```
