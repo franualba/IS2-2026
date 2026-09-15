@@ -1,5 +1,6 @@
 ```
 # Java/Maven specific
+.maven
 target/
 *.class
 *.jar
