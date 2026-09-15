@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Acceso')}" />
+<body class="club-bg">
+<main class="container py-5"><div class="row justify-content-center"><div class="col-sm-10 col-md-5">
+<section class="panel p-4">
+<p class="eyebrow">CLUB DEPORTIVO</p><h1 class="h3 mb-4">Ingreso al sistema</h1>
+<div class="alert alert-danger" th:if="${param.error}">Credenciales inválidas.</div>
+<form method="post" th:action="@{/login}">
+<label class="form-label" for="username">Usuario</label><input class="form-control mb-3" id="username" name="username" required autofocus>
+<label class="form-label" for="password">Contraseña</label><input class="form-control mb-4" type="password" id="password" name="password" required>
+<button class="btn btn-dark w-100" type="submit">Ingresar</button>
+</form></section></div></div></main>
+</body></html>

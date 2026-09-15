@@ -1,0 +1,8 @@
+:root { --ink:#18221f; --paper:#f4f1e8; --accent:#d5e74d; --line:#d8d5cc; }
+body { color:var(--ink); font-family: Georgia, 'Times New Roman', serif; }
+.club-bg { min-height:100vh; background:radial-gradient(circle at 85% 10%, #e4efaa 0, transparent 28%), var(--paper); }
+h1 { letter-spacing:0; font-weight:700; }
+.panel { background:rgba(255,255,255,.86); border:1px solid var(--line); border-radius:8px; box-shadow:0 12px 35px rgba(24,34,31,.08); }
+.eyebrow { color:#657019; font:700 .75rem/1.2 system-ui,sans-serif; letter-spacing:.12em; margin-bottom:.5rem; }
+.btn-dark { background:var(--ink); border-color:var(--ink); }
+.badge.text-bg-warning { background:var(--accent)!important; color:var(--ink)!important; }

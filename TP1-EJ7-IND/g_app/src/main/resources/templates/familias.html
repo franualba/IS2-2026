@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Familias')}" />
+<body class="club-bg"><nav class="navbar navbar-expand-lg border-bottom bg-white"><div class="container"><span class="navbar-brand fw-bold">CLUB / ADMIN</span><form th:action="@{/logout}" method="post"><button class="btn btn-outline-dark btn-sm">Salir</button></form></div></nav>
+<main class="container py-5"><div class="d-flex justify-content-between align-items-end mb-4"><div><p class="eyebrow">GESTIÓN FAMILIAR</p><h1>Grupos familiares</h1></div><span class="badge text-bg-warning" th:text="${#lists.size(familias)} + ' grupos'">0 grupos</span></div>
+<div class="alert alert-success" th:if="${param.ok}">El pago fue registrado correctamente.</div>
+<div class="panel overflow-hidden"><table class="table table-hover align-middle mb-0"><thead><tr><th>Familia</th><th>Integrantes</th><th>Cuotas registradas</th><th></th></tr></thead><tbody><tr th:each="familia : ${familias}"><td class="fw-semibold" th:text="${familia.denominacion}">Familia</td><td th:text="${familia.cantidadFamiliares}">0</td><td th:text="${familia.cantidadPagos}">0</td><td class="text-end"><a class="btn btn-dark btn-sm" th:href="@{/familias/{id}/pagos/nuevo(id=${familia.id})}">Registrar cuota</a></td></tr><tr th:if="${#lists.isEmpty(familias)}"><td colspan="4" class="text-center py-5 text-secondary">No hay familias cargadas.</td></tr></tbody></table></div></main></body></html>
